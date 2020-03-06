@@ -34,9 +34,29 @@ namespace SchedulerSMSApi
             return objrgstresponse;
         }
     
-        public void Login_Add(string Email,int Password)
+        public clsResponse Login_Add(string Email,string Password)
         {
-            dlobj.Login_Add(Email, Password);
+            clsResponse response = new clsResponse();
+            try
+            {
+                DataTable dt = dlobj.Login_Add(Email, Password);
+                if (dt.Rows.Count > 0)
+                {
+                    response.ResponseCode = 1;
+                    response.ResponseMessage = dt.Rows[0]["UserName"].ToString();
+                }
+                else
+                {
+                    response.ResponseCode = 0;
+                    response.ResponseMessage = "Error Occured";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.ResponseCode = -1;
+                response.ResponseMessage = "Error Occured :"+ex.ToString();
+            }
+            return response;
         }
     }
 }

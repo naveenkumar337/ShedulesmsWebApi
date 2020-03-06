@@ -42,8 +42,9 @@ namespace SchedulerSMSApi
             return dt;
         }
 
-        public void Login_Add(string Email, int Password)
+        public DataTable Login_Add(string Email,string Password)
         {
+            DataTable dt = new DataTable();
             try
             {
                 using (SqlConnection SqlCon = new SqlConnection(clsCommon.ConnectionString))
@@ -56,8 +57,11 @@ namespace SchedulerSMSApi
                             Command.Parameters.AddWithValue("@Email", Email);
                             Command.Parameters.AddWithValue("@Password", Password);
                             SqlCon.Open();
-                            Command.ExecuteNonQuery();
-                            SqlCon.Close();
+                            using (SqlDataAdapter da = new SqlDataAdapter(Command))
+                            {
+                                da.Fill(dt);
+                            }
+                           SqlCon.Close();
                         }
                     }
                 }
@@ -66,6 +70,7 @@ namespace SchedulerSMSApi
             {
                 throw (ex);
             }
+            return dt;
         }
     }
 }

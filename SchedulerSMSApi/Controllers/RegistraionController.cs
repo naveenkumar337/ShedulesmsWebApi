@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace SchedulerSMSApi.Controllers
+namespace SchedulerSMSApi
 {
     [RoutePrefix("api/Registraion")]
     public class RegistraionController : ApiController
@@ -20,11 +20,11 @@ namespace SchedulerSMSApi.Controllers
             clsRegstrResponse objresponse = objbl.Register_Add(obj);
             return objresponse;
         }
-        [HttpPost]
+        [HttpGet]
         [Route("Login_ADD")]
-        public void Login_ADD(string Email,int Password)
+        public clsResponse Login_ADD([FromUri]string Email,String Password)
         {
-            objbl.Login_Add(Email, Password);
+            return objbl.Login_Add(Email, Password);
 
         }
     }
