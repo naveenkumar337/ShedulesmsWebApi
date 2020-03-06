@@ -9,9 +9,9 @@ namespace SchedulerSMSApi
     {
         public string UserName { get; set; }
         public string Email { get; set; }
-        public int ContactNo { get; set; }
-        public int Password { get; set; }
-        public int ConfirmPassword { get; set; }
+        public string ContactNo { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
         public clsResponse objresponse { get; set; }
     }
     public class clsResponse
