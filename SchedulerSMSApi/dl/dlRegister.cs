@@ -27,9 +27,10 @@ namespace SchedulerSMSApi
                             Command.Parameters.AddWithValue("@Password", objregister.Password);
                             Command.Parameters.AddWithValue("@ConfirmPassword", objregister.ConfirmPassword);
                             SqlCon.Open();
-                            Command.ExecuteNonQuery();
-                            SqlDataAdapter da = new SqlDataAdapter(Command);
-                            da.Fill(dt);
+                            int val=Command.ExecuteNonQuery();
+
+                            //SqlDataAdapter da = new SqlDataAdapter(Command);
+                            //= da.Fill(dt);
                             SqlCon.Close();
                         }
                     }
