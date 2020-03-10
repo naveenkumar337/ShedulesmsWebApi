@@ -21,7 +21,12 @@ namespace SchedulerSMSApi
     }
     public class clsRegstrResponse
     {
-        public string UserName { get; set; }
+        public List<clsContactlist> lstcontacts;
         public clsResponse objresponse { get; set; }
+    }
+    public class clsContactlist
+    {
+        public string UserName { get; set; }
+        public string ContactNo { get; set; }
     }
 }

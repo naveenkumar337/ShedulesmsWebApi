@@ -27,5 +27,13 @@ namespace SchedulerSMSApi
             return objbl.Login_Add(Email, Password);
 
         }
+        [HttpGet]
+        [Route("ListContacts_Get")]
+        public clsRegstrResponse ListContacts_Get()
+        {
+            clsRegstrResponse objresponse = objbl.ListContacts_Get();
+            return objresponse;
+
+        }
     }
 }

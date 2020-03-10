@@ -12,11 +12,11 @@ namespace SchedulerSMSApi
         public  clsRegstrResponse Register_Add(clsRegistration obj)
         {
             clsRegstrResponse objrgstresponse = new clsRegstrResponse();
-            DataTable dt=dlobj.Register_Add(obj);
-            //var id = dt.Rows[0][0];
-            if (dt.Columns.Count > 0)
-            {
-                objrgstresponse.UserName = (dt.Rows[0][0]).ToString();
+            clsRegistration objregister= new clsRegistration();
+            
+           int i=dlobj.Register_Add(obj);
+            if (i > 0)
+            {              
                 objrgstresponse.objresponse = new clsResponse()
                 {
                     ResponseCode = 100,
@@ -57,6 +57,41 @@ namespace SchedulerSMSApi
                 response.ResponseMessage = "Error Occured :"+ex.ToString();
             }
             return response;
+        }
+
+        public clsRegstrResponse ListContacts_Get()
+        { 
+            clsRegstrResponse obj = new clsRegstrResponse();
+            obj.objresponse = new clsResponse();
+            try
+            {
+                DataTable dt = dlobj.ListContacts_Get();
+                if (dt.Rows.Count > 0)
+                {
+                    obj.lstcontacts = dt.AsEnumerable().Select((drow) =>
+                     {
+                         return new clsContactlist
+                         {
+                             UserName = drow.Field<string>("UserName"),
+                             ContactNo = drow.Field<string>("ContactNO"),
+                         };
+                     }).ToList();
+
+                    obj.objresponse.ResponseCode = 1;
+                    obj.objresponse.ResponseMessage = "Get contactlist Successfully";
+                }
+                else
+                {
+                    obj.objresponse.ResponseCode = 0;
+                    obj.objresponse.ResponseMessage = "Error Occured";
+                }
+            }
+            catch (Exception ex)
+            {
+                obj.objresponse.ResponseCode = -1;
+                obj.objresponse.ResponseMessage = "Error Occured :" + ex.ToString();
+            }
+            return obj;
         }
     }
 }

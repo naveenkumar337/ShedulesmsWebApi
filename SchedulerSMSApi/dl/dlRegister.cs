@@ -9,15 +9,13 @@ namespace SchedulerSMSApi
 {
     public class dlRegister
     {
-        public DataTable Register_Add(clsRegistration objregister)
+        public int Register_Add(clsRegistration objregister)
         {
-            DataTable dt = new DataTable();
+            int val = 0;
             try
             {
                 using (SqlConnection SqlCon = new SqlConnection(clsCommon.ConnectionString))
                 {
-                    if (SqlCon != null)
-                    {
                         using (SqlCommand Command = new SqlCommand("SP_ScheduledSMS_Register_ADD", SqlCon))
                         {
                             Command.CommandType = CommandType.StoredProcedure;
@@ -27,20 +25,17 @@ namespace SchedulerSMSApi
                             Command.Parameters.AddWithValue("@Password", objregister.Password);
                             Command.Parameters.AddWithValue("@ConfirmPassword", objregister.ConfirmPassword);
                             SqlCon.Open();
-                            int val=Command.ExecuteNonQuery();
-
-                            //SqlDataAdapter da = new SqlDataAdapter(Command);
-                            //= da.Fill(dt);
+                            val=Command.ExecuteNonQuery();
                             SqlCon.Close();
                         }
                     }
-                }
+               
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
-            return dt;
+            return val;
         }
 
         public DataTable Login_Add(string Email,string Password)
@@ -63,6 +58,35 @@ namespace SchedulerSMSApi
                                 da.Fill(dt);
                             }
                            SqlCon.Close();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+            return dt;
+        }
+
+        public DataTable ListContacts_Get()
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                using (SqlConnection SqlCon = new SqlConnection(clsCommon.ConnectionString))
+                {
+                    if (SqlCon != null)
+                    {
+                        using (SqlCommand Command = new SqlCommand("SP_ScheduledSMS_ListContacts_Get", SqlCon))
+                        {
+                            Command.CommandType = CommandType.StoredProcedure;
+                            SqlCon.Open();
+                            using (SqlDataAdapter da = new SqlDataAdapter(Command))
+                            {
+                                da.Fill(dt);
+                            }
+                            SqlCon.Close();
                         }
                     }
                 }
