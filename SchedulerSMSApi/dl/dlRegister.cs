@@ -97,5 +97,35 @@ namespace SchedulerSMSApi
             }
             return dt;
         }
+        public DataTable UpdatePassword(forget updatepassword)
+        {
+            DataTable table = new DataTable();
+            try
+            {
+                using (SqlConnection SqlCon = new SqlConnection(clsCommon.ConnectionString))
+                {
+                    if (SqlCon != null)
+                    {
+                        using (SqlCommand Command = new SqlCommand("Sp_ShedulerSms_ForgetPassword", SqlCon))
+                        {
+                            Command.CommandType = CommandType.StoredProcedure;
+                            SqlCon.Open();
+                            Command.Parameters.AddWithValue("@ContactNumber", updatepassword.ContactNo);
+                            Command.Parameters.AddWithValue("@passWord",updatepassword.Password);
+                            using (SqlDataAdapter da = new SqlDataAdapter(Command))
+                            {
+                                da.Fill(table);
+                            }
+                            SqlCon.Close();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return table;
+        }
     }
 }

@@ -33,7 +33,11 @@ namespace SchedulerSMSApi
         {
             clsRegstrResponse objresponse = objbl.ListContacts_Get();
             return objresponse;
-
+        }
+        [HttpPost]
+        public clsResponse ForgetPassword(forget forgetpassword)
+        {
+            return objbl.PasswordUpdate(forgetpassword);
         }
     }
 }

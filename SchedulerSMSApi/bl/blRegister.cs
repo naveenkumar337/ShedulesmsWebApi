@@ -93,5 +93,31 @@ namespace SchedulerSMSApi
             }
             return obj;
         }
+        public clsResponse PasswordUpdate(forget updatepassword)
+        {
+                clsResponse res = new clsResponse();
+            try
+            {
+
+                DataTable dt=dlobj.UpdatePassword(updatepassword);
+                if (dt.Rows.Count > 0)
+                {
+                    res.ResponseCode = 1;
+                    res.ResponseMessage = dt.Rows[0][0].ToString();
+                }
+                else
+                {
+
+                    res.ResponseCode = 0;
+                    res.ResponseMessage = "DB Error Occured";
+                }
+            }
+            catch (Exception ex)
+            {
+                res.ResponseCode = -1;
+                res.ResponseMessage = "Error Occured";
+            }
+            return res;
+        }
     }
 }

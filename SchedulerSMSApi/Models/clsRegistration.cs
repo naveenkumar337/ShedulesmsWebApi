@@ -29,4 +29,9 @@ namespace SchedulerSMSApi
         public string UserName { get; set; }
         public string ContactNo { get; set; }
     }
+    public class forget {
+        public string ContactNo { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+    }
 }
